@@ -1,514 +1,431 @@
+<!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Si Ketan Dashboard
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <title>Si Ketan Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="chemical.png">
   <style>
-   body {
-      font-family: 'Inter', sans-serif;
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .sidebar {
+      transition: transform 0.3s ease;
+    }
+    @media (max-width: 1023px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 40;
+        height: 100vh;
+      }
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 30;
+      }
+      .overlay.active {
+        display: block;
+      }
     }
   </style>
- </head>
- <body class="bg-[#f0f9f4] min-h-screen flex">
+</head>
+<body class="bg-[#f0f9f4] min-h-screen flex">
+  <!-- Mobile overlay -->
+  <div class="overlay"></div>
+
+  <!-- Mobile menu button -->
+  <button class="sidebar-toggle fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-md lg:hidden">
+    <i class="fas fa-bars text-[#2f6f32] text-lg"></i>
+  </button>
+
   <!-- Sidebar -->
-  <aside class="bg-white w-56 min-h-screen flex flex-col p-6 text-[#2f6f32] select-none border-r border-gray-200">
-    <div class="mb-6 bg-[#2f6f32] text-white p-4 -mx-6 -mt-6">
-        <div class="flex items-start gap-4">
-          <!-- Gambar di sebelah kiri -->
-          <img alt="Si Ketan logo" class="w-10 h-10 flex-shrink-0" src="https://storage.googleapis.com/a1aa/image/a028afa3-02ff-4fed-b746-fc93d0bca3fa.jpg"/>
-          
-          <!-- Teks di sebelah kanan (susun vertikal) -->
-          <div class="flex flex-col">
-            <h1 class="font-semibold text-lg leading-tight">Si Ketan</h1>
-            <p class="text-base text-white">Dashboard</p>
-          </div>
+  <aside class="sidebar bg-white w-64 min-h-screen flex flex-col p-4 text-[#2f6f32] select-none border-r border-gray-200">
+    <!-- Logo and App Name -->
+    <div class="mb-6 bg-[#2f6f32] text-white p-4 -mx-4 -mt-4 ">
+      <div class="flex items-center gap-3">
+        <img alt="Si Ketan logo" class="w-9 h-9 flex-shrink-0" src="https://storage.googleapis.com/a1aa/image/a028afa3-02ff-4fed-b746-fc93d0bca3fa.jpg"/>
+        <div class="flex flex-col">
+          <h1 class="font-semibold text-lg leading-tight">Si Ketan</h1>
+          <p class="text-sm text-white/90">Dashboard</p>
         </div>
       </div>
+    </div>
     
-    <nav class="flex flex-col gap-1.5 text-sm">
-      <a class="flex items-center gap-3 bg-[#2f6f32] text-white rounded-3xl px-3 py-2.5 font-small" href="#">
-        <i class="fas fa-home w-4 text-center"></i>
+    <!-- Navigation -->
+    <nav class="flex flex-col gap-1 text-sm">
+      <a class="flex items-center gap-3 bg-[#2f6f32] text-white rounded-xl px-3 py-2.5 font-medium" href="#">
+        <i class="fas fa-home w-5 text-center"></i>
         <span>Beranda</span>
       </a>
-      <a class="flex items-center gap-3 hover:bg-[#2f6f32] hover:text-white rounded-lg px-3 py-2.5 font-small transition-colors duration-200" href="#">
-        <i class="fas fa-layer-group w-4 text-center"></i>
+      <a class="flex items-center gap-3 hover:bg-[#2f6f32]/10 rounded-lg px-3 py-2.5 font-medium transition-colors" href="#">
+        <i class="fas fa-layer-group w-5 text-center"></i>
         <span>Area Pertanian</span>
       </a>
-      <a class="flex items-center gap-3 hover:bg-[#2f6f32] hover:text-white rounded-lg px-3 py-2.5 font-small transition-colors duration-200" href="#">
-        <i class="fas fa-user w-4 text-center"></i>
+      <a class="flex items-center gap-3 hover:bg-[#2f6f32]/10 rounded-lg px-3 py-2.5 font-medium transition-colors" href="#">
+        <i class="fas fa-user w-5 text-center"></i>
         <span>Petani</span>
       </a>
-      <a class="flex items-center gap-3 hover:bg-[#2f6f32] hover:text-white rounded-lg px-3 py-2.5 font-small transition-colors duration-200" href="#">
-        <i class="fas fa-users w-4 text-center"></i>
+      <a class="flex items-center gap-3 hover:bg-[#2f6f32]/10 rounded-lg px-3 py-2.5 font-medium transition-colors" href="#">
+        <i class="fas fa-users w-5 text-center"></i>
         <span>Kelompok Tani</span>
       </a>
-      <a class="flex items-center gap-3 hover:bg-[#2f6f32] hover:text-white rounded-lg px-3 py-2.5 font-small transition-colors duration-200" href="#">
-        <i class="fas fa-microchip w-4 text-center"></i>
+      <a class="flex items-center gap-3 hover:bg-[#2f6f32]/10 rounded-lg px-3 py-2.5 font-medium transition-colors" href="#">
+        <i class="fas fa-microchip w-5 text-center"></i>
         <span>Digitalisasi Lahan</span>
       </a>
     </nav>
   </aside>
+
   <!-- Main content -->
-  <main class="flex-1 p-6 max-w-full overflow-x-hidden">
-   <!-- Top weather & location bar -->
-   <section class="bg-[#2f6f32] rounded-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0 p-6 mb-6 relative overflow-hidden">
-    <img alt="Cloud with rain drops icon, white and green gradient style" class="w-20 h-20 flex-shrink-0" height="60" src="https://storage.googleapis.com/a1aa/image/6c337812-d715-4285-eb2d-dd0230758f8b.jpg" width="120"/>
-    <div class="text-white flex flex-col justify-center">
-     <div class="text-4xl font-semibold leading-none flex items-center gap-1">
-      28°C
-      <span class="text-base font-normal">
-       Gerimis
-      </span>
-     </div>
-    </div>
-    <div class="flex-1 max-w-xs md:max-w-sm bg-white bg-opacity-30 rounded-lg px-4 py-2 text-[#2f6f32] font-normal text-sm flex flex-col justify-center">
-     <div class="mb-1 text-xs">
-      Selasa, 15 April 2025 | 13 : 35 : 01
-     </div>
-     <select aria-label="Select Kecamatan Jogorogo" class="rounded-md border border-transparent focus:border-white focus:ring-1 focus:ring-white bg-white bg-opacity-70 text-[#2f6f32] text-sm font-semibold px-2 py-1 cursor-pointer">
-      <option>
-       Kec. Jogorogo (Pilih Daerah)
-      </option>
-     </select>
-    </div>
-    <div class="flex gap-3 text-xs text-[#2f6f32] font-semibold">
-     <div class="bg-white bg-opacity-90 rounded-lg px-3 py-2 flex flex-col items-center min-w-[70px]">
-      <div class="mb-1">
-       Kelembapan
-      </div>
-      <div class="text-green-700">
-       70%
-      </div>
-     </div>
-     <div class="bg-white bg-opacity-90 rounded-lg px-3 py-2 flex flex-col items-center min-w-[70px]">
-      <div class="mb-1">
-       Titik Embun
-      </div>
-      <div class="text-green-700">
-       26°C
-      </div>
-     </div>
-     <div class="bg-white bg-opacity-90 rounded-lg px-3 py-2 flex flex-col items-center min-w-[70px]">
-      <div class="mb-1">
-       Kualitas Udara
-      </div>
-      <div class="text-green-700 font-bold">
-       PM2.5
-      </div>
-     </div>
-    </div>
-   </section>
-   <!-- Main Dashboard heading and button -->
-   <section class="flex justify-between items-center mb-4">
-    <h2 class="font-semibold text-gray-800 text-lg">
-     Main Dashboard
-    </h2>
-    <button class="flex items-center gap-1 text-xs text-green-700 border border-green-700 rounded px-3 py-1 hover:bg-green-50 transition">
-     <i class="fas fa-print">
-     </i>
-     Cetak Laporan
-    </button>
-   </section>
-   <!-- Cards row -->
-   <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-th-large text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Total Luas
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Tanam Saat Ini
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-seedling text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Total Luas
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Panen Bulan Ini
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-layer-group text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Produktivitas
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Rata-rata
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-vector-square text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Status Digitalisasi
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Lahan
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-user text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Jumlah Petani
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Terdaftar
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
-     <i class="fas fa-users text-green-700 text-xl mb-2">
-     </i>
-     <div class="text-xs text-gray-600 mb-1">
-      Jumlah Gapoktan &amp;
-     </div>
-     <div class="text-xs text-gray-600 mb-2">
-      Poktan Aktif
-     </div>
-     <div class="bg-green-100 text-green-700 font-semibold rounded-md px-3 py-1 text-sm w-full">
-      16.575 ha
-     </div>
-    </div>
-   </section>
-   <!-- Statistik Bulanan Pertanian -->
-   <section class="bg-white rounded-lg p-4 mb-6 shadow-sm flex flex-col md:flex-row gap-4">
-    <div class="flex-1">
-     <div class="flex items-center gap-2 text-gray-600 text-xs font-semibold mb-2">
-      <i class="fas fa-chart-bar">
-      </i>
-      Statistik Bulanan Pertanian
-     </div>
-     <div class="relative w-full h-48">
-      <svg aria-label="Line chart showing monthly agricultural statistics" class="w-full h-full" role="img" viewbox="0 0 600 200">
-       <defs>
-        <lineargradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-         <stop offset="0%" stop-color="#a7f3d0" stop-opacity="0.6">
-         </stop>
-         <stop offset="100%" stop-color="#a7f3d0" stop-opacity="0">
-         </stop>
-        </lineargradient>
-       </defs>
-       <path d="M 20 180 L 50 120 L 80 140 L 110 80 L 140 100 L 170 40 L 200 60 L 230 20 L 260 40 L 290 60 L 320 40 L 350 80 L 380 60 L 410 40 L 440 60 L 470 40 L 500 60 L 530 40 L 560 60 L 590 40" fill="url(#gradient)" fill-opacity="0.6" stroke="#22c55e" stroke-width="2">
-       </path>
-       <circle cx="230" cy="20" fill="#22c55e" r="6">
-       </circle>
-       <rect fill="#22c55e" height="40" rx="6" ry="6" width="80" x="210" y="0">
-       </rect>
-       <text dominant-baseline="middle" fill="white" font-size="14" font-weight="600" text-anchor="middle" x="250" y="20">
-        $14,032.56
-       </text>
-       <text dominant-baseline="middle" fill="white" font-size="10" font-weight="400" text-anchor="middle" x="250" y="8">
-        Jan 30, 01:12:16 AM
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="20" y="195">
-        Jan
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="70" y="195">
-        Feb
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="120" y="195">
-        Mar
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="170" y="195">
-        Apr
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="220" y="195">
-        May
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="270" y="195">
-        Jun
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="320" y="195">
-        Jul
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="370" y="195">
-        Aug
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="420" y="195">
-        Sep
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="470" y="195">
-        Oct
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="520" y="195">
-        Nov
-       </text>
-       <text dominant-baseline="middle" fill="#999" font-size="10" font-weight="400" x="570" y="195">
-        Des
-       </text>
-      </svg>
-     </div>
-    </div>
-    <div class="flex flex-col gap-3 w-full max-w-xs text-xs text-gray-700 font-semibold">
-     <div class="flex justify-between items-center">
-      <select aria-label="Select Bulan" class="rounded border border-gray-300 px-2 py-1 cursor-pointer">
-       <option>
-        Bulan
-       </option>
-      </select>
-      <select aria-label="Select Tahun" class="rounded border border-gray-300 px-2 py-1 cursor-pointer">
-       <option>
-        Tahun
-       </option>
-      </select>
-     </div>
-     <select aria-label="Select Kecamatan Jogorogo" class="rounded border border-gray-300 px-2 py-1 cursor-pointer">
-      <option>
-       Kec. Jogorogo (Pilih Daerah)
-      </option>
-     </select>
-     <select aria-label="Select Komoditas" class="rounded border border-gray-300 px-2 py-1 cursor-pointer">
-      <option>
-       Komoditas (Semua)
-      </option>
-     </select>
-     <div class="flex justify-between items-center mt-auto">
-      <div>
-       <div class="text-green-700 font-bold text-xl leading-none">
-        1.5 Jt Ton
-       </div>
-       <div class="text-xs font-normal">
-        Total Produksi
-       </div>
-      </div>
-      <div class="text-gray-800 font-bold text-lg">
-       3.4%
-      </div>
-      <a aria-label="Open total production details" class="text-green-700 text-xl hover:text-green-800 transition" href="#">
-       <i class="fas fa-external-link-alt">
-       </i>
-      </a>
-     </div>
-     <a class="self-end text-green-600 text-xs font-semibold hover:underline" href="#">
-      Detail
-     </a>
-    </div>
-   </section>
-   <!-- Bottom grid with 3 sections -->
-   <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <!-- Digitalisasi Lahan -->
-    <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col">
-     <div class="flex justify-between items-center text-xs text-gray-600 font-semibold mb-2">
-      <div class="flex items-center gap-2">
-       <i class="fas fa-chart-bar">
-       </i>
-       Digitalisasi Lahan
-      </div>
-      <a class="text-green-600 font-semibold hover:underline" href="#">
-       Detail
-      </a>
-     </div>
-     <div class="relative w-full h-56 rounded overflow-hidden border border-gray-200">
-      <img alt="Map showing agricultural land with red, yellow, and green colored areas and a marker labeled Gapoktan in the center" class="w-full h-full object-cover" height="224" src="https://storage.googleapis.com/a1aa/image/19738eb9-e961-411d-6cd7-4ebd13c17cbe.jpg" width="400"/>
-      <select aria-label="Verification area filter" class="absolute top-3 left-3 bg-white rounded border border-gray-300 text-xs px-2 py-1 cursor-pointer">
-       <option>
-        Verifikasi Area
-       </option>
-      </select>
-     </div>
-     <div class="flex gap-4 mt-3 text-xs text-gray-600">
-      <div class="flex items-center gap-1">
-       <span class="w-3 h-3 rounded-full bg-red-600 inline-block">
-       </span>
-       Lahan telah didigitalkan dan diverifikasi.
-      </div>
-      <div class="flex items-center gap-1">
-       <span class="w-3 h-3 rounded-full bg-green-400 inline-block">
-       </span>
-       Lahan dalam proses verifikasi
-      </div>
-      <div class="flex items-center gap-1">
-       <span class="w-3 h-3 rounded-full bg-yellow-400 inline-block">
-       </span>
-       Lahan belum didigitalkan.
-      </div>
-     </div>
-    </div>
-    <!-- Struktur Kelembagaan Pertanian -->
-    <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col">
-     <div class="flex justify-between items-center text-xs text-gray-600 font-semibold mb-2">
-      <div class="flex items-center gap-2">
-       <i class="fas fa-chart-bar">
-       </i>
-       Struktur Kelembagaan Pertanian
-      </div>
-      <a class="text-green-600 font-semibold hover:underline" href="#">
-       Detail
-      </a>
-     </div>
-     <div class="flex flex-col gap-3">
-      <div class="flex justify-between text-sm font-bold text-gray-800">
-       <div>
-        Jumlah yang terlibat
-        <div class="text-lg">
-         21.536
+  <main class="flex-1 p-4 md:p-6 lg:p-8 max-w-full overflow-x-hidden transition-all duration-300">
+    <!-- Weather and Location Card -->
+    <section class="rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-3 sm:p-4 md:p-6 mb-6 relative overflow-hidden bg-gradient-to-r from-[#2f6f32] to-white">
+      <!-- Weather Icon and Temp -->
+      <div class="flex items-center gap-2 sm:gap-3 md:gap-4">
+        <img alt="Weather icon" class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0" src="image.png"/>
+        <div class="text-white mr-2">
+          <div class="text-sm sm:text-md md:text-xl font-semibold leading-none flex items-center gap-1">
+            28°C
+            <span class="text-xs sm:text-sm md:text-base font-normal">Cerah</span>
+          </div>
         </div>
-       </div>
-       <div>
-        Jumlah Area Terdaftar
-        <div class="text-lg">
-         435
-        </div>
-       </div>
       </div>
-      <div class="flex h-6 rounded overflow-hidden w-full">
-       <div class="bg-purple-400 w-1/2">
-       </div>
-       <div class="bg-blue-600 w-1/4">
-       </div>
-       <div class="bg-green-600 w-1/4">
-       </div>
+    
+      <!-- Date and Location -->
+      <div class="rounded-lg p-2 sm:p-3 text-white font-normal text-xs sm:text-sm">
+        <div class="mb-1 sm:ml-4 md:ml-6">Selasa, 15 April 2025 | 13:35:01</div>
+        <select class="w-full rounded-lg border border-transparent focus:border-white focus:ring-1 focus:ring-white bg-white text-[#2f6f32] text-xs sm:text-sm font-medium px-2 py-1 cursor-pointer">
+          <option>Kec. Jogorogo (Pilih Daerah)</option>
+        </select>
       </div>
-      <div class="flex flex-col gap-2 text-xs font-semibold text-gray-700">
-       <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2">
-         <div class="w-6 h-3 rounded bg-purple-400">
-         </div>
-         Penyuluh
+    
+      <!-- Weather Metrics -->
+      <div class="sm:col-span-2 lg:col-span-2 grid grid-cols-3 gap-2 sm:gap-3 text-xs text-[#2f6f32] font-semibold">
+        <!-- Kelembapan Card -->
+        <div class="bg-white/90 rounded-xl p-2 sm:p-3 flex flex-col items-center 
+                    shadow-lg hover:shadow-xl transition-all duration-300
+                    border border-white/80
+                    transform hover:-translate-y-1
+                    backdrop-blur-sm
+                    relative overflow-hidden
+                    before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/40 before:to-transparent
+                    after:absolute after:inset-0 after:bg-[#2f6f32] after:opacity-0 after:transition-opacity after:duration-300
+                    hover:after:opacity-5">
+          <i class="fas fa-droplet text-green-700 mb-1 text-base sm:text-lg"></i>
+          <div class="mb-1 text-center text-xs sm:text-sm">Kelembapan</div>
+          <div class="text-green-700 text-xs sm:text-sm md:text-base font-bold">70%</div>
         </div>
-        <div>
-         23%
+    
+        <!-- Titik Embun Card -->
+        <div class="bg-white/90 rounded-xl p-2 sm:p-3 flex flex-col items-center
+                    shadow-lg hover:shadow-xl transition-all duration-300
+                    border border-white/80
+                    transform hover:-translate-y-1
+                    backdrop-blur-sm
+                    relative overflow-hidden
+                    before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/40 before:to-transparent
+                    after:absolute after:inset-0 after:bg-[#2f6f32] after:opacity-0 after:transition-opacity after:duration-300
+                    hover:after:opacity-5">
+          <i class="fas fa-temperature-low text-green-700 mb-1 text-base sm:text-lg"></i>
+          <div class="mb-1 text-center text-xs sm:text-sm">Titik Embun</div>
+          <div class="text-green-700 text-xs sm:text-sm md:text-base font-bold">26°C</div>
         </div>
-       </div>
-       <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2">
-         <div class="w-6 h-3 rounded bg-blue-600">
-         </div>
-         Poktan
+    
+        <!-- Kualitas Udara Card -->
+        <div class="bg-white/90 rounded-xl p-2 sm:p-3 flex flex-col items-center
+                    shadow-lg hover:shadow-xl transition-all duration-300
+                    border border-white/80
+                    transform hover:-translate-y-1
+                    backdrop-blur-sm
+                    relative overflow-hidden
+                    before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/40 before:to-transparent
+                    after:absolute after:inset-0 after:bg-[#2f6f32] after:opacity-0 after:transition-opacity after:duration-300
+                    hover:after:opacity-5">
+          <i class="fas fa-wind text-green-700 mb-1 text-base sm:text-lg"></i>
+          <div class="mb-1 text-center text-xs sm:text-sm">Kualitas Udara</div>
+          <div class="text-green-700 text-xs sm:text-sm md:text-base font-bold">PM2.5</div>
         </div>
-        <div>
-         23%
-        </div>
-       </div>
-       <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2">
-         <div class="w-6 h-3 rounded bg-green-600">
-         </div>
-         Gapoktan
-        </div>
-        <div>
-         23%
-        </div>
-       </div>
       </div>
-     </div>
-    </div>
-    <!-- Komoditas -->
-    <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col">
-     <div class="flex justify-between items-center text-xs text-gray-600 font-semibold mb-2">
-      <div class="flex items-center gap-2">
-       <i class="fas fa-chart-bar">
-       </i>
-       Komoditas
+    </section>
+
+    <!-- Dashboard Header -->
+    <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+      <h2 class="font-semibold text-gray-800 text-xl">Main Dashboard</h2>
+      <button class="flex items-center gap-2 text-xs md:text-sm text-green-700 border border-green-700 rounded-lg px-3 py-1.5 hover:bg-green-50 transition">
+        <i class="fas fa-print"></i>
+        Cetak Laporan
+      </button>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-th-large text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Total Luas</div>
+        <div class="text-xs text-gray-600 mb-2">Tanam Saat Ini</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
       </div>
-      <a class="text-green-600 font-semibold hover:underline" href="#">
-       Detail
-      </a>
-     </div>
-     <div class="flex gap-4 items-center">
-      <svg aria-label="Pie chart showing commodity distribution" height="100" role="img" viewbox="0 0 100 100" width="100">
-       <circle cx="50" cy="50" fill="#3b82f6" r="50">
-       </circle>
-       <path d="M50 50 L50 0 A50 50 0 0 1 85 15 Z" fill="#ef4444">
-       </path>
-       <path d="M50 50 L85 15 A50 50 0 0 1 90 50 Z" fill="#10b981">
-       </path>
-       <path d="M50 50 L90 50 A50 50 0 0 1 50 100 Z" fill="#8b5cf6">
-       </path>
-       <path d="M50 50 L50 100 A50 50 0 0 1 15 85 Z" fill="#facc15">
-       </path>
-       <path d="M50 50 L15 85 A50 50 0 0 1 10 50 Z" fill="#ec4899">
-       </path>
-       <path d="M50 50 L10 50 A50 50 0 0 1 50 0 Z" fill="#6366f1">
-       </path>
-      </svg>
-      <div class="flex flex-col gap-1 text-xs text-gray-700 font-semibold">
-       <div class="flex justify-between w-36">
-        <span>
-         Rata - rata progres
-        </span>
-        <span class="text-lg font-bold">
-         67,5%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-red-600 inline-block">
-        </span>
-        Jagung
-        <span class="ml-auto font-normal">
-         3.2%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-blue-600 inline-block">
-        </span>
-        Padi
-        <span class="ml-auto font-normal">
-         2.5%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-green-600 inline-block">
-        </span>
-        Lombok
-        <span class="ml-auto font-normal">
-         1.8%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-pink-600 inline-block">
-        </span>
-        Bawang Merah
-        <span class="ml-auto font-normal">
-         1.8%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-yellow-400 inline-block">
-        </span>
-        Bawang Putih
-        <span class="ml-auto font-normal">
-         1.8%
-        </span>
-       </div>
-       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-gray-400 inline-block">
-        </span>
-        Lain-lain
-        <span class="ml-auto font-normal">
-         1.8%
-        </span>
-       </div>
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-seedling text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Total Luas</div>
+        <div class="text-xs text-gray-600 mb-2">Panen Bulan Ini</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
       </div>
-     </div>
-    </div>
-   </section>
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-layer-group text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Produktivitas</div>
+        <div class="text-xs text-gray-600 mb-2">Rata-rata</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-vector-square text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Status Digitalisasi</div>
+        <div class="text-xs text-gray-600 mb-2">Lahan</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-user text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Jumlah Petani</div>
+        <div class="text-xs text-gray-600 mb-2">Terdaftar</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
+      </div>
+      <div class="bg-white rounded-lg p-3 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+        <i class="fas fa-users text-green-700 text-xl mb-2"></i>
+        <div class="text-xs text-gray-600 mb-1">Jumlah Gapoktan &</div>
+        <div class="text-xs text-gray-600 mb-2">Poktan Aktif</div>
+        <div class="bg-green-100 text-green-700 font-semibold rounded-md px-2 py-1 text-sm w-full">16.575 ha</div>
+      </div>
+    </section>
+
+    <!-- Agricultural Statistics -->
+    <section class="bg-white rounded-lg p-4 md:p-6 mb-6 shadow-sm grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-2 text-gray-600 text-sm font-semibold mb-3">
+          <i class="fas fa-chart-line text-green-700"></i>
+          Statistik Bulanan Pertanian
+        </div>
+        <div class="relative w-full h-64 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+          <div class="text-gray-400">[Chart Visualization]</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-3">
+          <select class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs md:text-sm cursor-pointer focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            <option>Bulan</option>
+          </select>
+          <select class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs md:text-sm cursor-pointer focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            <option>Tahun</option>
+          </select>
+        </div>
+        
+        <select class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs md:text-sm cursor-pointer focus:ring-2 focus:ring-green-500 focus:border-green-500">
+          <option>Kec. Jogorogo (Pilih Daerah)</option>
+        </select>
+        
+        <select class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs md:text-sm cursor-pointer focus:ring-2 focus:ring-green-500 focus:border-green-500">
+          <option>Komoditas (Semua)</option>
+        </select>
+        
+        <div class="mt-auto bg-green-50 rounded-lg p-4">
+          <div class="flex justify-between items-end">
+            <div>
+              <div class="text-green-700 font-bold text-xl md:text-2xl">1.5 Jt Ton</div>
+              <div class="text-xs md:text-sm text-gray-600">Total Produksi</div>
+            </div>
+            <div class="text-gray-800 font-bold text-lg md:text-xl">3.4%</div>
+          </div>
+          <a class="inline-block mt-3 text-green-600 text-xs md:text-sm font-medium hover:underline" href="#">
+            Lihat Detail <i class="fas fa-chevron-right ml-1 text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Section -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+      <!-- Digitalisasi Lahan -->
+      <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2 text-gray-600 text-sm font-semibold">
+            <i class="fas fa-map-marked-alt text-green-700"></i>
+            Digitalisasi Lahan
+          </div>
+          <a class="text-green-600 text-xs font-medium hover:underline" href="#">Detail</a>
+        </div>
+        <div class="relative w-full h-48 md:h-56 rounded-lg overflow-hidden border border-gray-200 mb-3">
+          <div class="w-full h-full bg-gray-50 flex items-center justify-center text-gray-400">
+            [Map Visualization]
+          </div>
+          <select class="absolute top-2 left-2 bg-white rounded border border-gray-300 text-xs px-2 py-1 cursor-pointer shadow">
+            <option>Verifikasi Area</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-gray-600">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-600"></span>
+            <span class="truncate">Lahan diverifikasi</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+            <span class="truncate">Proses verifikasi</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+            <span class="truncate">Belum didigitalkan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Struktur Kelembagaan -->
+      <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2 text-gray-600 text-sm font-semibold">
+            <i class="fas fa-sitemap text-green-700"></i>
+            Struktur Kelembagaan
+          </div>
+          <a class="text-green-600 text-xs font-medium hover:underline" href="#">Detail</a>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <div class="text-xs text-gray-500 mb-1">Jumlah yang terlibat</div>
+            <div class="text-lg md:text-xl font-bold text-gray-800">21.536</div>
+          </div>
+          <div>
+            <div class="text-xs text-gray-500 mb-1">Jumlah Area</div>
+            <div class="text-lg md:text-xl font-bold text-gray-800">435</div>
+          </div>
+        </div>
+        <div class="h-2 rounded-full overflow-hidden bg-gray-200 mb-4">
+          <div class="h-full bg-gradient-to-r from-purple-400 via-blue-600 to-green-600" style="width: 100%"></div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-2 rounded-full bg-purple-400"></span>
+              <span>Penyuluh</span>
+            </div>
+            <span class="font-medium">23%</span>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-2 rounded-full bg-blue-600"></span>
+              <span>Poktan</span>
+            </div>
+            <span class="font-medium">23%</span>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-2 rounded-full bg-green-600"></span>
+              <span>Gapoktan</span>
+            </div>
+            <span class="font-medium">23%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Komoditas -->
+      <div class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2 text-gray-600 text-sm font-semibold">
+            <i class="fas fa-apple-alt text-green-700"></i>
+            Komoditas
+          </div>
+          <a class="text-green-600 text-xs font-medium hover:underline" href="#">Detail</a>
+        </div>
+        <div class="flex flex-col md:flex-row gap-4 items-center">
+          <div class="w-24 h-24 flex-shrink-0 bg-gray-50 rounded-full flex items-center justify-center text-gray-400">
+            [Pie Chart]
+          </div>
+          <div class="flex-1 w-full">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs text-gray-600">Rata-rata progres</span>
+              <span class="text-lg font-bold text-gray-800">67.5%</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                  <span>Jagung</span>
+                </div>
+                <span>3.2%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                  <span>Padi</span>
+                </div>
+                <span>2.5%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-green-600"></span>
+                  <span>Lombok</span>
+                </div>
+                <span>1.8%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                  <span>Bawang Merah</span>
+                </div>
+                <span>1.8%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                  <span>Bawang Putih</span>
+                </div>
+                <span>1.8%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                  <span>Lain-lain</span>
+                </div>
+                <span>1.8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
- </body>
+
+  <script>
+    // Toggle sidebar on mobile
+    document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('active');
+      document.querySelector('.overlay').classList.toggle('active');
+    });
+
+    // Close sidebar when clicking on overlay
+    document.querySelector('.overlay').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.remove('active');
+      this.classList.remove('active');
+    });
+
+    // Close sidebar when clicking on a nav link (mobile)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth < 1024) {
+          document.querySelector('.sidebar').classList.remove('active');
+          document.querySelector('.overlay').classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
 </html>
